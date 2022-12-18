@@ -41,9 +41,9 @@ In those examples you will see words **"healer"** and **"damager"**. They are ju
 
 2. **cast spell on friendly DPS in any situation 2v2/3v3/soloQ**
    
-    *#showtooltip Void Shift*
-    */cast [nomod,@healer]*
-    */cast [@damager] Void Shift*
+   *#showtooltip Void Shift*
+   */cast [nomod,@healer]*
+   */cast [@damager] Void Shift*
    
     Even tho nobody wants to cast anything on "healer" (maybe he is not even present in your team) he has to be written inside macro without specifying spell which should cast to make it work. 
 
