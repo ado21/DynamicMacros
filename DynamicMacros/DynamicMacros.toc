@@ -1,0 +1,10 @@
+## Interface: 100002
+## Title: DynamicMacros
+## Author: Krionel
+## Version: 1.0.0
+
+## SavedVariables: macroNameArray
+
+embeds.xml
+GUI.lua
+main.lua
