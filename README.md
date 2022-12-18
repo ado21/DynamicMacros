@@ -1,8 +1,3 @@
-
-**Have you ever experienced annoying manual overwrite of Player Names inside Macros (/cast [@PlayerName] Regrowth ) when you swapped people with whom you played ?**
-
-**!!! Yes, this is the solution to automatize it !!!**
-
 # Overview
 This addon dynamically changes PlayerNames inside user defined macros to name they would want to change it manually before entering arenas. To make this work I enhanced blizzard macro language and it has a little different syntax as default macros which will be explained later in documentation.
 
