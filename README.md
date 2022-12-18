@@ -41,7 +41,7 @@ In those examples you will see words **"healer"** and **"damager"**. They are ju
 
 2. **cast spell on friendly DPS in any situation 2v2/3v3/soloQ**
    
-   *#showtooltip Void Shift*   
+   *#showtooltip Void Shift*
    */cast [nomod,@healer]*   
    */cast [@damager] Void Shift*
    
@@ -50,15 +50,21 @@ In those examples you will see words **"healer"** and **"damager"**. They are ju
 3. **cast spell on friendly healer in any situation 2v2/3v3/soloQ**
    
     *#showtooltip Void Shift*
+   
     */cast [@healer] Void Shift*
+   
     To cast on healer it is sufficient to specify just one line with healer as you can see above unlike for dps.
 
 4. **nomodifier cast on mev(krionel is my character name), shift modifer cast on healer and if he does not exists cast on target, ctrl modifier cast on damager and if he does not exists cast on focus**
    
     *#showtooltip*
+   
     */cast [nomod,@Krionel]Regrowth*
+   
     */cast [mod:shift,@dynamicMacros,exists][mod:shift,@target]Regrowth*
+   
     */cast [mod:ctrl,@dynamicMacros,exists][mod:ctrl,@focus]Regrowth*
+   
 ___
 ### Useful information
 Macros wont be updating while you have default blizzard macro window GUI opened. So simply once you create macro close this window to make it work. Then you can reopen it once you are in 2 or 3 membered party to see changes.
