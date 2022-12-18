@@ -20,7 +20,7 @@ Settings windows will be opened which is pretty simple to use. Here you will spe
 #### DynamicMacro Syntax
 
 **Facts:** 
-@target, @focus, @partypet1, @partypet2, @<<yourcharactername>> wont be touched and will behave as blizzard intended to.
+@target, @focus, @partypet1, @partypet2, @yourcharactername wont be touched and will behave as blizzard intended to.
 
 I ll show here **4 examples** how this logic work what should help you create your own macros. 
 In those examples you will see words **"healer"** and **"damager"**. They are just for clear presentation how it works. On creation of macro you can write there anything (table/mouse,dog,cat simply whatever comes to your mind.) This string will be anyway replaced with playername once you are in party with 2 or 3 members. This is just for initial setup.
