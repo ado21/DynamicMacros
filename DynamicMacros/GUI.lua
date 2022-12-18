@@ -39,7 +39,7 @@ function CreateOptions()
     ideditbox:SetPoint("TOPLEFT", panel, "TOPLEFT", 25, -150)
 
     -- add button to UI
-    local addbutton = panel:MakeButton('name', 'Add','newsize', 2, 'description', "Add / Update ability", 'func', function()
+    local addbutton = panel:MakeButton('name', 'Add','newsize', 2, 'description', "Add Macro name", 'func', function()
         local userMacroNameInput = ideditbox:GetText()
         if userMacroNameInput == "" then
             print("|cff33ff99DynamicMacros: |rMacro name is empty!")
@@ -58,7 +58,7 @@ function CreateOptions()
     addbutton:SetPoint("TOPLEFT", ideditbox, "BOTTOMLEFT", -5, -5)
 
     -- add button to UI
-    local removebutton = panel:MakeButton('name', 'Remove', 'newsize', 2, 'description', 'Remove ability', 'func', function()
+    local removebutton = panel:MakeButton('name', 'Remove', 'newsize', 2, 'description', 'Remove Macro name', 'func', function()
         local userMacroNameInput = ideditbox:GetText()
         local result = has_value(macroNameArray, userMacroNameInput)
         if (result ~= false) then
