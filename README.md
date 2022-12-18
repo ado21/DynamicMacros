@@ -31,6 +31,7 @@ I ll show here **4 examples** how this logic work what should help you create yo
 In those examples you will see words **"healer"** and **"damager"**. They are just for clear presentation how it works. On creation of macro you can write there anything (table/mouse,dog,cat simply whatever comes to your mind.) This string will be anyway replaced with playername once you are in party with 2 or 3 members. This is just for initial setup.
 
 1. **cast on friendly healer without modifier and on friendly dps in team with shift modifier**
+
     *#showtooltip Regrowth
     /cast [nomod,@healer] Regrowth
     /cast [mod:shift,@damager] Regrowth*
