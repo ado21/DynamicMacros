@@ -32,11 +32,11 @@ In those examples you will see words **"healer"** and **"damager"**. They are ju
 
 1. **cast on friendly healer without modifier and on friendly dps in team with shift modifier**
 
-    *#showtooltip Regrowth
+    *#showtooltip Regrowth*
    
-    /cast [nomod,@healer] Regrowth
+    */cast [nomod,@healer] Regrowth*
    
-    /cast [mod:shift,@damager] Regrowth*
+    */cast [mod:shift,@damager] Regrowth*
    
     Lets say you are in soloQ. Second line would automatically replace "healer" with name of you healer in team. Same logic will be applied for dps and word "damager" at third line would be replaced with name of damager in team.
     That way you didnt have to touch your macros and they would still work.
