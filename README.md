@@ -33,8 +33,7 @@ In those examples you will see words **"healer"** and **"damager"**. They are ju
 1. **cast on friendly healer without modifier and on friendly dps in team with shift modifier**
 
     *#showtooltip Regrowth
-   
-    /cast [nomod,@healer] Regrowth
+     /cast [nomod,@healer] Regrowth
    
     /cast [mod:shift,@damager] Regrowth*
    
