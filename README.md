@@ -36,7 +36,7 @@ In those examples you will see words **"healer"** and **"damager"**. They are ju
 
 2. **cast spell on friendly DPS in any situation 2v2/3v3/soloQ**
    
-   *#showtooltip Void Shift*
+   *#showtooltip Void Shift*\
    */cast [nomod,@healer]*   
    */cast [@damager] Void Shift*
    
