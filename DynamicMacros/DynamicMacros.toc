@@ -3,7 +3,7 @@
 ## Author: Krionel
 ## Version: 1.0.0
 
-## SavedVariables: macroNameArray
+## SavedVariablesPerCharacter: macroNameArray
 
 embeds.xml
 GUI.lua
