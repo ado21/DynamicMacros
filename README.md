@@ -20,7 +20,7 @@ Settings windows will be opened which is pretty simple to use. Here you will spe
 #### DynamicMacro Syntax
 
 **Facts:** 
-@target, @focus, @partypet1, @partypet2, @arena1, @arena2, @arena3, @yourcharactername wont be touched and will behave as blizzard intended to.
+@target, @focus, mouseover, @partypet1, @partypet2, @arena1, @arena2, @arena3, @yourcharactername wont be touched and will behave as blizzard intended to.
 
 I ll show here **4 examples** how this logic work what should help you create your own macros. 
 In those examples you will see words **"healer"** and **"damager"**. They are just for clear presentation how it works. On creation of macro you can write there anything (table/mouse,dog,cat simply whatever comes to your mind.) This string will be anyway replaced with playername once you are in party with 2 or 3 members. This is just for initial setup.
@@ -49,7 +49,7 @@ In those examples you will see words **"healer"** and **"damager"**. They are ju
    
     To cast on healer it is sufficient to specify just one line with healer as you can see above unlike for dps.
 
-4. **nomodifier cast on mev(krionel is my character name), shift modifer cast on healer and if he does not exists cast on target, ctrl modifier cast on damager and if he does not exists cast on focus**
+4. **nomodifier cast on me (krionel is my character name), shift modifier cast on healer and if he does not exists cast on target, ctrl modifier cast on damager and if he does not exists cast on focus**
    
     *#showtooltip*   
     */cast [nomod,@Krionel]Regrowth*   
