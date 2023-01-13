@@ -66,8 +66,8 @@ function specifyHealerAndDamagerInParty(macroName)
             break
         end                
         m = m + (l - j)
-        -- check if found string is not target, focus, arena1/2/3, partypet1/2
-        if ((strsub(body, j+1, k-1) ~= "target") and (strsub(body, j+1, k-1) ~= "focus") and (strsub(body, j+1, k-1) ~= "arena1") and (strsub(body, j+1, k-1) ~= "arena2") and (strsub(body, j+1, k-1) ~= "arena3") and (strsub(body, j+1, k-1) ~= "partypet1") and (strsub(body, j+1, k-1) ~= "partypet2")) then
+        -- check if found string is not target, focus, mouseover, arena1/2/3, partypet1/2
+        if ((strsub(body, j+1, k-1) ~= "target") and (strsub(body, j+1, k-1) ~= "focus") and (strsub(body, j+1, k-1) ~= "mouseover") and (strsub(body, j+1, k-1) ~= "arena1") and (strsub(body, j+1, k-1) ~= "arena2") and (strsub(body, j+1, k-1) ~= "arena3") and (strsub(body, j+1, k-1) ~= "partypet1") and (strsub(body, j+1, k-1) ~= "partypet2")) then
             -- check if found string is not users character name
             if (checkIfPlayerUnitName(body,j,k) == false) then
                 local party1Name = strsub(body, j+1, k-1)
@@ -151,8 +151,21 @@ function findNameInMacro(body,i,j,k,l)
     end
     --start of unit name at @
     i, j = string.find(body, "@", l)
-    --end of unit name at ]
+
+    --look for name ending with "]"
     k, l = string.find(body, "%]", j)
+
+    --look for name ending with ","
+    local m, n = string.find(body, ",", j)
+
+    -- in case "," has been found earlier than "]" consider it as end of name
+    if (m ~= nil and n ~= nil) then
+        if (n < l) then
+            k = m
+            l = n
+        end 
+    end
+
     --in case macro body is empty
     if (i == nil and j == nil and k == nil and l == nil) then
        return i,j,k,l 
