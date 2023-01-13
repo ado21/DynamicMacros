@@ -10,6 +10,8 @@ local dynamicMacros = CreateFrame("Frame", "DynamicMacrosFrame");
 dynamicMacros:RegisterEvent("GROUP_ROSTER_UPDATE");--GROUP_ROSTER_UPDATE,PLAYER_TARGET_CHANGED,ARENA_TEAM_UPDATE
 
 local function updatePlayerNamesInMacros(self, event, ...)
+    H = nil
+    D = nil
     --delay whole functionality by x seconds due to UnitName() api returning unknown immediately on player load into arena
     C_Timer.After(3, dynamicMacroUpdate)
 end
