@@ -1,4 +1,4 @@
-## Interface: 100002
+## Interface: 100005
 ## Title: DynamicMacros
 ## Author: Krionel
 ## Version: 1.0.1
