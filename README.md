@@ -8,7 +8,8 @@ This addon is **developed for DPS classes** because Healers are using @party1/2 
 
 **SoloQueue is fully supported** and therefore in case protection paladins have been present in soloQ they will be considered as healers in DynamicMacros addon. Other tanks than protection paladins will be considered as damagers in DynamicMacros addon.
 
-Addon **would not work** in 2v2/3v3 arenas where team compositions are: (Healer + prot paladin + anything), (Healer + 2x non-paladin tank) 
+Addon **will not work** in 3v3 arenas where team compositions are: (Healer + prot paladin + anything)
+
 *Just stop playing tank in PvP nobody wants **you**.*
 ___
 ### DynamicMacros usage:
