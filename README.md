@@ -61,7 +61,7 @@ ___
 ### Useful information
 Macros wont be updating while you have default blizzard macro window GUI opened. So simply once you create macro close this window to make it work. Then you can reopen it once you are in 2 or 3 membered party to see changes.
 
-Keep in mind addon updates your macros whenever your party group is updated. This means somebody leaves/joins/wentOffline/wentOnline and number of player in group is still 2 or 3.
+Keep in mind addon updates your macros 3 seconds after your party group is updated. This means somebody leaves/joins/wentOffline/wentOnline/loadIntoArena and at the same time number of player in group is still 2 or 3.
 
 This is the logic how it works. This way your macros dynamically assign name of player you would overwrite manually and you never have to do that again.
 
