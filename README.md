@@ -82,6 +82,7 @@ This is the logic how it works. This way your macros dynamically assign name of 
    */cast [@healer]*   
    */cast [@damager] Leap of Faith*
 
+If you are still having an issue with creating your own macros. Contact me via discord: krionel@7188
 
 
 **Credit for idea goes to Black**
