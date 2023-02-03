@@ -69,6 +69,8 @@ Keep in mind addon updates your macros 3 seconds after your party group is updat
 
 This is the logic how it works. This way your macros dynamically assign name of player you would overwrite manually and you never have to do that again.
 
+Ctrl modifier for **friendly players is bugged** since launch of Dragonflight. It is actually **not an issue of addon but game itself**. Ctrl does not work in normal macros too. Workaround for that is to bind ctrl+letter directly into action bars and create macro without specified ctrl modifier in it.
+
 ### More random examples (some people still do not understand it)
 
 1. **cast on friendly healer without any modifier at all**
