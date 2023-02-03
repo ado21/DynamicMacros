@@ -28,7 +28,7 @@ In those examples you will see words **"healer"** and **"damager"**. They are ju
 
 Keep in mind those are just 4 examples from basic to advanced macros. First occurence with @anything(excluding facts above) will be considered as line for healer and then second occurence with @anything(excluding facts above) will be considered as line for dps. 
 
-**Modifiers(nomod,shift..) which I use in examples are totally optional**. They work same way they do in default macros by Blizzard
+**Modifiers(nomod,shift..) which I use in examples are totally optional**. They work same way they do in default macros by Blizzard.
 
 1. **cast on friendly healer without modifier and on friendly dps in team with shift modifier**
 
