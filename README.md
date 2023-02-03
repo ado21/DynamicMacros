@@ -58,8 +58,8 @@ Keep in mind those are just 4 examples from basic to advanced macros. First occu
    
     *#showtooltip*   
     */cast [nomod,@Krionel]Regrowth*   
-    */cast [mod:shift,@dynamicMacros,exists][mod:shift,@target]Regrowth*   
-    */cast [mod:ctrl,@dynamicMacros,exists][mod:ctrl,@focus]Regrowth*
+    */cast [mod:shift,@healer,exists][mod:shift,@target]Regrowth*   
+    */cast [mod:ctrl,@damager,exists][mod:ctrl,@focus]Regrowth*
    
 ___
 ### Useful information
