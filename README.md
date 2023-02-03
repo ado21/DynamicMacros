@@ -27,6 +27,7 @@ I ll show here **4 examples** how this logic work what should help you create yo
 In those examples you will see words **"healer"** and **"damager"**. They are just for clear presentation how it works. On creation of macro you can write there anything (table/mouse,dog,cat simply whatever comes to your mind.) This string will be anyway replaced with playername once you are in party with 2 or 3 members. This is just for initial setup.
 
 Keep in mind those are just 4 examples from basic to advanced macros. First occurence with @anything(excluding facts above) will be considered as line for healer and then second occurence with @anything(excluding facts above) will be considered as line for dps. 
+
 **Modifiers(nomod,shift..) which I use in examples are totally optional**. They work same way they do in default macros by Blizzard
 
 1. **cast on friendly healer without modifier and on friendly dps in team with shift modifier**
