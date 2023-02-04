@@ -84,6 +84,7 @@ Ctrl modifier for **friendly players is bugged** since launch of Dragonflight. I
    */cast [@healer]*   
    */cast [@damager] Leap of Faith*
 
+---
 If you are still having an issue with creating your own macros. Contact me via discord: krionel@7188
 
 
