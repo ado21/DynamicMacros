@@ -25,8 +25,8 @@ In those examples you will see word **"dynamicMacros"**. It is just for clear pr
 
 Keep in mind those are just 4 examples from basic to advanced macros. 
 
-First occurence with @anything(excluding facts below) will be considered as line for healer. 
-Second occurence with @anything(excluding facts below) will be considered as line for dps. 
+First occurence of @dynamicMacros(excluding facts below) will be considered as line for healer. 
+Second occurence of @dynamicMacros(excluding facts below) will be considered as line for dps. 
 
 **Facts:** 
 @target, @focus, mouseover, @partypet1, @partypet2, @arena1, @arena2, @arena3, @yourcharactername wont be touched and will behave as blizzard intended to.
