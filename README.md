@@ -24,7 +24,7 @@ Settings windows will be opened which is pretty simple to use. Here you will spe
 @target, @focus, mouseover, @partypet1, @partypet2, @arena1, @arena2, @arena3, @yourcharactername wont be touched and will behave as blizzard intended to.
 
 I ll show here **4 examples** how this logic work what should help you create your own macros. 
-In those examples you will see words **"healer"** and **"damager"**. They are just for clear presentation how it works. On creation of macro you can write there anything (table/mouse,dog,cat simply whatever comes to your mind.) This string will be anyway replaced with playername once you are in party with 2 or 3 members. This is just for initial setup.
+In those examples you will see word **"dynamicMacros"**. It is just for clear presentation how it works. On creation of macro you can write there instead of **"dynamicMacros"** anything (table,mouse,dog,cat, simply whatever comes to your mind.) This string will be anyway replaced with playername once you are in party with 2 or 3 members. This is just for initial setup.
 
 Keep in mind those are just 4 examples from basic to advanced macros. First occurence with @anything(excluding facts above) will be considered as line for healer and then second occurence with @anything(excluding facts above) will be considered as line for dps. 
 
@@ -33,33 +33,33 @@ Keep in mind those are just 4 examples from basic to advanced macros. First occu
 1. **cast on friendly healer without modifier and on friendly dps in team with shift modifier**
 
     *#showtooltip Regrowth*   
-    */cast [nomod,@healer] Regrowth*   
-    */cast [mod:shift,@damager] Regrowth*
+    */cast [nomod,@dynamicMacros] Regrowth*   
+    */cast [mod:shift,@dynamicMacros] Regrowth*
    
-    Lets say you are in soloQ. Second line would automatically replace "healer" with name of you healer in team. Same logic will be applied for dps and word "damager" at third line would be replaced with name of damager in team.
+    Lets say you are in soloQ. Second line would automatically replace "dynamicMacros" with name of you healer in team. Same logic will be applied for dps and second word "dynamicMacros" at third line would be replaced with name of damager in team.
     That way you didnt have to touch your macros and they would still work.
 
 2. **cast spell on friendly DPS in any situation 2v2/3v3/soloQ**
    
    *#showtooltip Void Shift*\
-   */cast [nomod,@healer]*   
-   */cast [@damager] Void Shift*
+   */cast [nomod,@dynamicMacros]*   
+   */cast [@dynamicMacros] Void Shift*
    
-    Even tho nobody wants to cast anything on "healer" (maybe he is not even present in your team) he has to be written inside macro without specifying spell which should cast to make it work. 
+    Even tho nobody wants to cast anything on "healer" (maybe he is not even present in your team) second line has to be written inside macro without specifying spell which should be cast on healer to make it work. Third line will be considered as line for damager.
 
 3. **cast spell on friendly healer in any situation 2v2/3v3/soloQ**
    
     *#showtooltip Void Shift*   
-    */cast [@healer] Void Shift*
+    */cast [@dynamicMacros] Void Shift*
    
-    To cast on healer it is sufficient to specify just one line with healer as you can see above unlike for dps.
+    To cast on healer it is sufficient to specify just one line as you can see above unlike for dps.
 
 4. **nomodifier cast on me (krionel is my character name), shift modifier cast on healer and if he does not exists cast on target, ctrl modifier cast on damager and if he does not exists cast on focus**
    
     *#showtooltip*   
     */cast [nomod,@Krionel]Regrowth*   
-    */cast [mod:shift,@healer,exists][mod:shift,@target]Regrowth*   
-    */cast [mod:ctrl,@damager,exists][mod:ctrl,@focus]Regrowth*
+    */cast [mod:shift,@dynamicMacros,exists][mod:shift,@target]Regrowth*   
+    */cast [mod:ctrl,@dynamicMacros,exists][mod:ctrl,@focus]Regrowth*
    
 ___
 ### Useful information
@@ -76,13 +76,13 @@ Ctrl modifier for **friendly players is bugged** since launch of Dragonflight. I
 1. **cast on friendly healer without any modifier at all**
 
     *#showtooltip Blessing of Protection*   
-    */cast [@healer] Blessing of Protection*   
+    */cast [@dynamicMacros] Blessing of Protection*   
 
 2. **cast spell on friendly DPS (NOT healer at all) without any modifer**
    
    *#showtooltip Leap of Faith*\
-   */cast [@healer]*   
-   */cast [@damager] Leap of Faith*
+   */cast [@dynamicMacros]*   
+   */cast [@dynamicMacros] Leap of Faith*
 
 ---
 If you are still having an issue with creating your own macros. Contact me via discord: krionel@7188
