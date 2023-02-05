@@ -20,15 +20,18 @@ Settings windows will be opened which is pretty simple to use. Here you will spe
 
 #### DynamicMacro Syntax
 
-**Facts:** 
-@target, @focus, mouseover, @partypet1, @partypet2, @arena1, @arena2, @arena3, @yourcharactername wont be touched and will behave as blizzard intended to.
-
 I ll show here **4 examples** how this logic work what should help you create your own macros. 
 In those examples you will see word **"dynamicMacros"**. It is just for clear presentation how it works. On creation of macro you can write there instead of **"dynamicMacros"** anything (table,mouse,dog,cat, simply whatever comes to your mind.) This string will be anyway replaced with playername once you are in party with 2 or 3 members. This is just for initial setup.
 
-Keep in mind those are just 4 examples from basic to advanced macros. First occurence with @anything(excluding facts above) will be considered as line for healer and then second occurence with @anything(excluding facts above) will be considered as line for dps. 
+Keep in mind those are just 4 examples from basic to advanced macros. 
 
-**Modifiers(nomod,shift..) which I use in examples are totally optional**. They work same way they do in default macros by Blizzard.
+First occurence with @anything(excluding facts below) will be considered as line for healer. 
+Second occurence with @anything(excluding facts below) will be considered as line for dps. 
+
+**Facts:** 
+@target, @focus, mouseover, @partypet1, @partypet2, @arena1, @arena2, @arena3, @yourcharactername wont be touched and will behave as blizzard intended to.
+
+Modifiers(nomod,shift..) which I use in examples are totally optional. They work same way they do in default macros by Blizzard.
 
 1. **cast on friendly healer without modifier and on friendly dps in team with shift modifier**
 
