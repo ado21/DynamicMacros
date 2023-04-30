@@ -92,7 +92,7 @@ Ctrl modifier for **friendly players is bugged** since launch of Dragonflight. I
    *#showtooltip*   
    */cast [known:Blessing of sanctuary, @dynamicMacros] Blessing of sanctuary; [@dynamicMacros] Blessing of spellwarding;*
    
-4. **cast spell on damager based on known talent (Blessing of Sanctuary/ Blessing of Spellwarding) 
+4. **cast spell on damager based on known talent (Blessing of Sanctuary/ Blessing of Spellwarding)**
 
    *#showtooltip*   
    */cast [nomod,@dynamicMacros]*
