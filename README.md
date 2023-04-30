@@ -25,8 +25,8 @@ In those examples you will see word **"dynamicMacros"**. It is just for clear pr
 
 Keep in mind those are just 4 examples from basic to advanced macros. 
 
-First occurence of @dynamicMacros(excluding facts below) will be considered as line for healer. 
-Second occurence of @dynamicMacros(excluding facts below) will be considered as line for dps. 
+First line with @dynamicMacros occurences (excluding facts below) will be considered as strings for healer. 
+Second line of @dynamicMacros(excluding facts below) will be considered as line for dps and each occurence of @dynamicMacros will be replaced with damager. 
 
 **Facts:** 
 @target, @focus, mouseover, @partypet1, @partypet2, @arena1, @arena2, @arena3, @yourcharactername wont be touched and will behave as blizzard intended to.
@@ -86,6 +86,17 @@ Ctrl modifier for **friendly players is bugged** since launch of Dragonflight. I
    *#showtooltip Leap of Faith*\
    */cast [@dynamicMacros]*   
    */cast [@dynamicMacros] Leap of Faith*
+
+3. **cast spell on healer based on known talent (Blessing of Sanctuary/ Blessing of Spellwarding) 
+
+   *#showtooltip*   
+   */cast [known:Blessing of sanctuary, @dynamicMacros] Blessing of sanctuary; [@dynamicMacros] Blessing of spellwarding;*
+   
+4. **cast spell on damager based on known talent (Blessing of Sanctuary/ Blessing of Spellwarding) 
+
+   *#showtooltip*   
+   */cast [nomod,@dynamicMacros]*
+   */cast [known:Blessing of sanctuary, @dynamicMacros] Blessing of sanctuary; [@dynamicMacros] Blessing of spellwarding;*
 
 ---
 If you are still having an issue with creating your own macros. Contact me via discord: krionel@7188
