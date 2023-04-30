@@ -96,7 +96,6 @@ Ctrl modifier for **friendly players is bugged** since launch of Dragonflight. I
 
    *#showtooltip*   
    */cast [nomod,@dynamicMacros]*
-   
    */cast [known:Blessing of sanctuary, @dynamicMacros] Blessing of sanctuary; [@dynamicMacros] Blessing of spellwarding;*
 
 ---
