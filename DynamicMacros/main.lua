@@ -62,39 +62,68 @@ function specifyHealerAndDamagerInParty(macroName)
     end
     --go through whole content of users macro
     while m <= strlen(body) do
-        -- look for first occurence [@<<anything>>]
+        -- look for occurence [@<<anything>>] to replace with Healer Name
         i,j,k,l = findNameInMacro(body,i,j,k,l)
         if j == nil then
             break
         end                
         m = m + (l - j)
         -- check if found string is not target, focus, mouseover, arena1/2/3, partypet1/2
-        if ((strsub(body, j+1, k-1) ~= "target") and (strsub(body, j+1, k-1) ~= "focus") and (strsub(body, j+1, k-1) ~= "mouseover") and (strsub(body, j+1, k-1) ~= "arena1") and (strsub(body, j+1, k-1) ~= "arena2") and (strsub(body, j+1, k-1) ~= "arena3") and (strsub(body, j+1, k-1) ~= "partypet1") and (strsub(body, j+1, k-1) ~= "partypet2")) then
+        if ((strsub(body, j+1, k-1) ~= "target") and (strsub(body, j+1, k-1) ~= "focus") and (strsub(body, j+1, k-1) ~= "mouseover") and (strsub(body, j+1, k-1) ~= "arena1") and (strsub(body, j+1, k-1) ~= "arena2") and (strsub(body, j+1, k-1) ~= "arena3") and (strsub(body, j+1, k-1) ~= "partypet1") and (strsub(body, j+1, k-1) ~= "partypet2") and (strsub(body, j+1, k-1) ~= "player")) then
             -- check if found string is not users character name
             if (checkIfPlayerUnitName(body,j,k) == false) then
                 local party1Name = strsub(body, j+1, k-1)
+                length = strlen(party1Name)
                 --replace first occurence of a string with string \'.. H ..\'
                 local cnt = 0
                 body = string.gsub (body, party1Name, function ( m )
                     cnt = cnt + 1
                     if cnt == 1 then
                         return "\'.. H ..\'"
+
                     end
                 end)
-                break
+                --reposition variables to correct place after replacing string with \'.. H ..\'
+                j = j - length + 9
+                l = l - length + 9
+                --check position of next occurence (e,f,g,h) which should be replaced with healer name
+                e,f,g,h = i,j,k,l
+                while true do
+                    e,f,g,h = findNameInMacro(body,e,f,g,h)
+                    if (f == nil or g == nil) then
+                        break
+                    end
+                    if ((strsub(body, f+1, g-1) ~= "target") and (strsub(body, f+1, g-1) ~= "focus") and (strsub(body, f+1, g-1) ~= "mouseover") and (strsub(body, f+1, g-1) ~= "arena1") and (strsub(body, f+1, g-1) ~= "arena2") and (strsub(body, f+1, g-1) ~= "arena3") and (strsub(body, f+1, g-1) ~= "partypet1") and (strsub(body, f+1, g-1) ~= "partypet2") and (strsub(body, f+1, g-1) ~= "player")) then
+                        -- check if found string is not users character name
+                        if (checkIfPlayerUnitName(body,f,g) == false) then
+                            break
+                        end
+                    end
+                end
+                --look for "/" character which triggers second while loop in case whole first line with healer names is correctly replaced
+                --if "/" char is not found (p == nil) do nothing
+                p,_ = string.find(body, "%/", l)
+                if (l == nil or f == nil) then
+                    break
+                end
+                if (p ~= nil) then    
+                    if (l-1 <= p and p <= f) then
+                        break
+                    end
+                end
             end
         end
     end
     --go through whole content of users macro
     while m <= strlen(body) do
-        --look for second occurence [@<<anything>>]
+        --look for occurence [@<<anything>>] to replace with Damager Name
         i,j,k,l = findNameInMacro(body,i,j,k,l)
         if j == nil then
             break
         end                
         m = m + (l - j)
         -- check if found string is not target, focus, arena1/2/3, partypet1/2 or previosuly set \'.. H ..\' string
-        if ((strsub(body, j+1, k-1) ~= "target") and (strsub(body, j+1, k-1) ~= "focus") and (strsub(body, j+1, k-1) ~= "arena1") and (strsub(body, j+1, k-1) ~= "arena2") and (strsub(body, j+1, k-1) ~= "arena3") and (strsub(body, j+1, k-1) ~= "partypet1") and (strsub(body, j+1, k-1) ~= "partypet2") and (strsub(body, j+1, k-1) ~= "\'.. H ..\'")) then
+        if ((strsub(body, j+1, k-1) ~= "target") and (strsub(body, j+1, k-1) ~= "focus") and (strsub(body, j+1, k-1) ~= "mouseover") and (strsub(body, j+1, k-1) ~= "arena1") and (strsub(body, j+1, k-1) ~= "arena2") and (strsub(body, j+1, k-1) ~= "arena3") and (strsub(body, j+1, k-1) ~= "partypet1") and (strsub(body, j+1, k-1) ~= "partypet2") and (strsub(body, j+1, k-1) ~= "player") and (strsub(body, j+1, k-1) ~= "\'.. H ..\'")) then
             -- check if found string is not users character name
             if (checkIfPlayerUnitName(body,j,k) == false) then
                 local party1Name = strsub(body, j+1, k-1)
@@ -106,7 +135,34 @@ function specifyHealerAndDamagerInParty(macroName)
                         return "\'.. D ..\'"
                     end
                 end)
-                break
+                --reposition variables to correct place after replacing string with \'.. D ..\'
+                j = j - length + 9
+                l = l - length + 9
+                --check position of next occurence (e,f,g,h) which should be replaced with damager name
+                e,f,g,h = i,j,k,l
+                while true do
+                    e,f,g,h = findNameInMacro(body,e,f,g,h)
+                    if (f == nil or g == nil) then
+                        break
+                    end
+                    if ((strsub(body, f+1, g-1) ~= "target") and (strsub(body, f+1, g-1) ~= "focus") and (strsub(body, f+1, g-1) ~= "mouseover") and (strsub(body, f+1, g-1) ~= "arena1") and (strsub(body, f+1, g-1) ~= "arena2") and (strsub(body, f+1, g-1) ~= "arena3") and (strsub(body, f+1, g-1) ~= "partypet1") and (strsub(body, f+1, g-1) ~= "partypet2") and (strsub(body, f+1, g-1) ~= "player")) then
+                        -- check if found string is not users character name
+                        if (checkIfPlayerUnitName(body,f,g) == false) then
+                            break
+                        end
+                    end
+                end
+                --look for "/" character which ends second while loop in case whole second line with damager names is correctly replaced
+                --if "/" char is not found (p == nil) do nothing
+                p,_ = string.find(body, "%/", l)
+                if (l == nil or f == nil) then
+                    break
+                end
+                if (p ~= nil) then
+                    if (l < p and p < f) then
+                        break
+                    end
+                end
             end
         end
     end
