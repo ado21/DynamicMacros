@@ -29,7 +29,7 @@ First line with @dynamicMacros occurences (excluding facts below) will be consid
 Second line of @dynamicMacros(excluding facts below) will be considered as line for dps and each occurence of @dynamicMacros will be replaced with damager. 
 
 **Facts:** 
-@target, @focus, mouseover, @partypet1, @partypet2, @arena1, @arena2, @arena3, @yourcharactername wont be touched and will behave as blizzard intended to.
+@target, @focus, mouseover, @partypet1, @partypet2, @arena1, @arena2, @arena3, @player, @yourcharactername wont be touched and will behave as blizzard intended to.
 
 Modifiers(nomod,shift..) which I use in examples are totally optional. They work same way they do in default macros by Blizzard.
 
