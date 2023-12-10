@@ -100,7 +100,5 @@ Ctrl modifier for **friendly players is bugged** since launch of Dragonflight. I
    */cast [known:Blessing of sanctuary, @dynamicMacros] Blessing of sanctuary; [@dynamicMacros] Blessing of spellwarding;*
 
 ---
-If you are still having an issue with creating your own macros. Contact me via discord: krionel@7188
-
 
 **Credit for idea goes to Black**
