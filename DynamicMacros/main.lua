@@ -69,7 +69,7 @@ function specifyHealerAndDamagerInParty(macroName)
         end                
         m = m + (l - j)
         -- check if found string is not target, focus, mouseover, arena1/2/3, partypet1/2
-        if ((strsub(body, j+1, k-1) ~= "target") and (strsub(body, j+1, k-1) ~= "focus") and (strsub(body, j+1, k-1) ~= "mouseover") and (strsub(body, j+1, k-1) ~= "arena1") and (strsub(body, j+1, k-1) ~= "arena2") and (strsub(body, j+1, k-1) ~= "arena3") and (strsub(body, j+1, k-1) ~= "partypet1") and (strsub(body, j+1, k-1) ~= "partypet2") and (strsub(body, j+1, k-1) ~= "player")) then
+        if ((strsub(body, j+1, k-1) ~= "target") and (strsub(body, j+1, k-1) ~= "cursor") and (strsub(body, j+1, k-1) ~= "focus") and (strsub(body, j+1, k-1) ~= "mouseover") and (strsub(body, j+1, k-1) ~= "arena1") and (strsub(body, j+1, k-1) ~= "arena2") and (strsub(body, j+1, k-1) ~= "arena3") and (strsub(body, j+1, k-1) ~= "partypet1") and (strsub(body, j+1, k-1) ~= "partypet2") and (strsub(body, j+1, k-1) ~= "player")) then
             -- check if found string is not users character name
             if (checkIfPlayerUnitName(body,j,k) == false) then
                 local party1Name = strsub(body, j+1, k-1)
