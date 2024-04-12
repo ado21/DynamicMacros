@@ -93,7 +93,7 @@ function specifyHealerAndDamagerInParty(macroName)
                     if (f == nil or g == nil) then
                         break
                     end
-                    if ((strsub(body, f+1, g-1) ~= "target") and (strsub(body, f+1, g-1) ~= "focus") and (strsub(body, f+1, g-1) ~= "mouseover") and (strsub(body, f+1, g-1) ~= "arena1") and (strsub(body, f+1, g-1) ~= "arena2") and (strsub(body, f+1, g-1) ~= "arena3") and (strsub(body, f+1, g-1) ~= "partypet1") and (strsub(body, f+1, g-1) ~= "partypet2") and (strsub(body, f+1, g-1) ~= "player")) then
+                    if ((strsub(body, f+1, g-1) ~= "target") and (strsub(body, j+1, k-1) ~= "cursor") and (strsub(body, f+1, g-1) ~= "focus") and (strsub(body, f+1, g-1) ~= "mouseover") and (strsub(body, f+1, g-1) ~= "arena1") and (strsub(body, f+1, g-1) ~= "arena2") and (strsub(body, f+1, g-1) ~= "arena3") and (strsub(body, f+1, g-1) ~= "partypet1") and (strsub(body, f+1, g-1) ~= "partypet2") and (strsub(body, f+1, g-1) ~= "player")) then
                         -- check if found string is not users character name
                         if (checkIfPlayerUnitName(body,f,g) == false) then
                             break
