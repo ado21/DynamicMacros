@@ -105,5 +105,8 @@ Ctrl modifier for **friendly players is bugged** since launch of Dragonflight. I
    */cast [known:Blessing of sanctuary, @dynamicMacros] Blessing of sanctuary; [@dynamicMacros] Blessing of spellwarding;*
 
 ---
-
+### ** Valuable Testers**
+##### **Marimvp** *(helped to find root cause of pesky bug when sometimes macros are not updated between solo shuffle rounds)*
+---
 **Credit for idea goes to Black**
+
