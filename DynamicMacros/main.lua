@@ -2,18 +2,28 @@ local dynamicMacrosFrameName = "dynamicMacrosFrameName";
 macroNameArray = {};
 local nonExistentmacroNameArray
 
-local H --healer var
+local H -- healer var
 local D -- damager var
+
+-- manual trigger to modify macros in any instance type
+SLASH_DMCOMMANDS1 = "/dmt"
+SlashCmdList["DMCOMMANDS"] = function(msg)
+    H = nil
+    D = nil
+    dynamicMacroUpdate()
+end 
 
 --Register event on which macros should start changing
 local dynamicMacros = CreateFrame("Frame", "DynamicMacrosFrame");
 dynamicMacros:RegisterEvent("GROUP_ROSTER_UPDATE");--GROUP_ROSTER_UPDATE,PLAYER_TARGET_CHANGED,ARENA_TEAM_UPDATE
 
 local function updatePlayerNamesInMacros(self, event, ...)
-    H = nil
-    D = nil
-    --delay whole functionality by x seconds due to UnitName() api returning unknown immediately on player load into arena
-    C_Timer.After(3, dynamicMacroUpdate)
+    if (IsInInstance() == "arena") then
+        H = nil
+        D = nil
+        --delay whole functionality by x seconds due to UnitName() api returning unknown immediately on player load into arena
+        C_Timer.After(3, dynamicMacroUpdate)
+    end
 end
 
 dynamicMacros:SetScript("OnEvent", updatePlayerNamesInMacros);
@@ -69,7 +79,7 @@ function specifyHealerAndDamagerInParty(macroName)
         end                
         m = m + (l - j)
         -- check if found string is not target, focus, mouseover, arena1/2/3, partypet1/2
-        if ((strsub(body, j+1, k-1) ~= "target") and (strsub(body, j+1, k-1) ~= "focus") and (strsub(body, j+1, k-1) ~= "mouseover") and (strsub(body, j+1, k-1) ~= "arena1") and (strsub(body, j+1, k-1) ~= "arena2") and (strsub(body, j+1, k-1) ~= "arena3") and (strsub(body, j+1, k-1) ~= "partypet1") and (strsub(body, j+1, k-1) ~= "partypet2") and (strsub(body, j+1, k-1) ~= "player")) then
+        if ((strsub(body, j+1, k-1) ~= "target") and (strsub(body, j+1, k-1) ~= "focus") and (strsub(body, j+1, k-1) ~= "mouseover") and (strsub(body, j+1, k-1) ~= "arena1") and (strsub(body, j+1, k-1) ~= "arena2") and (strsub(body, j+1, k-1) ~= "arena3") and (strsub(body, j+1, k-1) ~= "partypet1") and (strsub(body, j+1, k-1) ~= "partypet2") and (strsub(body, j+1, k-1) ~= "player") and (strsub(body, j+1, k-1) ~= "cursor")) then
             -- check if found string is not users character name
             if (checkIfPlayerUnitName(body,j,k) == false) then
                 local party1Name = strsub(body, j+1, k-1)
@@ -80,7 +90,6 @@ function specifyHealerAndDamagerInParty(macroName)
                     cnt = cnt + 1
                     if cnt == 1 then
                         return "\'.. H ..\'"
-
                     end
                 end)
                 --reposition variables to correct place after replacing string with \'.. H ..\'
@@ -93,7 +102,7 @@ function specifyHealerAndDamagerInParty(macroName)
                     if (f == nil or g == nil) then
                         break
                     end
-                    if ((strsub(body, f+1, g-1) ~= "target") and (strsub(body, f+1, g-1) ~= "focus") and (strsub(body, f+1, g-1) ~= "mouseover") and (strsub(body, f+1, g-1) ~= "arena1") and (strsub(body, f+1, g-1) ~= "arena2") and (strsub(body, f+1, g-1) ~= "arena3") and (strsub(body, f+1, g-1) ~= "partypet1") and (strsub(body, f+1, g-1) ~= "partypet2") and (strsub(body, f+1, g-1) ~= "player")) then
+                    if ((strsub(body, f+1, g-1) ~= "target") and (strsub(body, f+1, g-1) ~= "focus") and (strsub(body, f+1, g-1) ~= "mouseover") and (strsub(body, f+1, g-1) ~= "arena1") and (strsub(body, f+1, g-1) ~= "arena2") and (strsub(body, f+1, g-1) ~= "arena3") and (strsub(body, f+1, g-1) ~= "partypet1") and (strsub(body, f+1, g-1) ~= "partypet2") and (strsub(body, f+1, g-1) ~= "player") and (strsub(body, f+1, g-1) ~= "cursor")) then
                         -- check if found string is not users character name
                         if (checkIfPlayerUnitName(body,f,g) == false) then
                             break
@@ -123,7 +132,7 @@ function specifyHealerAndDamagerInParty(macroName)
         end                
         m = m + (l - j)
         -- check if found string is not target, focus, arena1/2/3, partypet1/2 or previosuly set \'.. H ..\' string
-        if ((strsub(body, j+1, k-1) ~= "target") and (strsub(body, j+1, k-1) ~= "focus") and (strsub(body, j+1, k-1) ~= "mouseover") and (strsub(body, j+1, k-1) ~= "arena1") and (strsub(body, j+1, k-1) ~= "arena2") and (strsub(body, j+1, k-1) ~= "arena3") and (strsub(body, j+1, k-1) ~= "partypet1") and (strsub(body, j+1, k-1) ~= "partypet2") and (strsub(body, j+1, k-1) ~= "player") and (strsub(body, j+1, k-1) ~= "\'.. H ..\'")) then
+        if ((strsub(body, j+1, k-1) ~= "target") and (strsub(body, j+1, k-1) ~= "focus") and (strsub(body, j+1, k-1) ~= "mouseover") and (strsub(body, j+1, k-1) ~= "arena1") and (strsub(body, j+1, k-1) ~= "arena2") and (strsub(body, j+1, k-1) ~= "arena3") and (strsub(body, j+1, k-1) ~= "partypet1") and (strsub(body, j+1, k-1) ~= "partypet2") and (strsub(body, j+1, k-1) ~= "player") and (strsub(body, j+1, k-1) ~= "cursor") and (strsub(body, j+1, k-1) ~= "\'.. H ..\'")) then
             -- check if found string is not users character name
             if (checkIfPlayerUnitName(body,j,k) == false) then
                 local party1Name = strsub(body, j+1, k-1)
@@ -145,7 +154,7 @@ function specifyHealerAndDamagerInParty(macroName)
                     if (f == nil or g == nil) then
                         break
                     end
-                    if ((strsub(body, f+1, g-1) ~= "target") and (strsub(body, f+1, g-1) ~= "focus") and (strsub(body, f+1, g-1) ~= "mouseover") and (strsub(body, f+1, g-1) ~= "arena1") and (strsub(body, f+1, g-1) ~= "arena2") and (strsub(body, f+1, g-1) ~= "arena3") and (strsub(body, f+1, g-1) ~= "partypet1") and (strsub(body, f+1, g-1) ~= "partypet2") and (strsub(body, f+1, g-1) ~= "player")) then
+                    if ((strsub(body, f+1, g-1) ~= "target") and (strsub(body, f+1, g-1) ~= "focus") and (strsub(body, f+1, g-1) ~= "mouseover") and (strsub(body, f+1, g-1) ~= "arena1") and (strsub(body, f+1, g-1) ~= "arena2") and (strsub(body, f+1, g-1) ~= "arena3") and (strsub(body, f+1, g-1) ~= "partypet1") and (strsub(body, f+1, g-1) ~= "partypet2") and (strsub(body, f+1, g-1) ~= "player") and (strsub(body, f+1, g-1) ~= "cursor")) then
                         -- check if found string is not users character name
                         if (checkIfPlayerUnitName(body,f,g) == false) then
                             break
