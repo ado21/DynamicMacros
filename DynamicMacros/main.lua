@@ -18,7 +18,8 @@ local dynamicMacros = CreateFrame("Frame", "DynamicMacrosFrame");
 dynamicMacros:RegisterEvent("GROUP_ROSTER_UPDATE");--GROUP_ROSTER_UPDATE,PLAYER_TARGET_CHANGED,ARENA_TEAM_UPDATE
 
 local function updatePlayerNamesInMacros(self, event, ...)
-    if (IsInInstance() == "arena") then
+    _,instanceType = IsInInstance()
+    if (instanceType == "arena") then
         H = nil
         D = nil
         --delay whole functionality by x seconds due to UnitName() api returning unknown immediately on player load into arena
@@ -58,6 +59,9 @@ function dynamicMacroUpdate()
         if (D ~= nil) then
             print('|cff33ff99DynamicMacros: |rDamager: ' .. D) 
         end
+    else
+        -- Fix pesky bug when sometimes macros are not updated between solo shuffle rounds when server has delay and still registers you to be in combat
+        C_Timer.After(2, dynamicMacroUpdate)
     end
 end
 

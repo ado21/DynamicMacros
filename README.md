@@ -1,7 +1,7 @@
 # Overview
-This addon dynamically changes PlayerNames inside user defined macros to name they would want to change it manually before entering arenas. To make this work I enhanced blizzard macro language and it has a little different syntax as default macros which will be explained later in documentation.
+This addon dynamically changes PlayerNames inside user defined macros to character name they would want to change it manually before entering arenas. To make this work I enhanced blizzard macro language and it has a little different syntax as default macros which will be explained later in documentation.
 
-Addon **will be loaded** whenever number of players in party is **2** or **3**. In every other scenario addon will do **nothing**.
+Addon **will be loaded** whenever number of players in party is **2** or **3** and you are in **arena**. In every other scenario addon will do **nothing** unless you are triggering it for testing purposes outside of arena instance (more on that down below in **usage** section.
 Addon is developed for **PvP only** and therefore PvE requests to enhance addon will be most likely ignored.
 
 This addon is **developed for DPS classes** because Healers are using @party1/2 targetting macros and this would be worthless for them.
@@ -14,9 +14,14 @@ Addon **will not work** in 3v3 arenas where team compositions are: (Healer + pro
 ___
 ### DynamicMacros usage:
 
+**To manually trigger addon in any instance where your group size is 2 or 3 simply type /dmt**
+
+This is extremely handy feature for you when you are creating macros first time and you want to see whether it worked as you expected. On top of that this command can be used if addon bugs out for some reason and your macros are not updated as they are supposed to (for example in middle of solo shuffle rounds)
+
 **To open addon settings type in chat /dm**
-Settings windows will be opened which is pretty simple to use. Here you will specify macro names which you want to behave as DynamicMacros. Bottom window will show you list of macro names which you already defined to behave as DynamicMacros. Once your macro name appears in this window we can proceed to macro syntax and create one.
-**Warning: Do not create macro names with same names. Then it will do nothing.**
+
+Settings window will be opened which is pretty simple to use. Here you will specify macro names which you want to behave as DynamicMacros. Bottom window will show you list of macro names which you already defined to behave as DynamicMacros. Once your macro name appears in this window we can proceed to macro syntax and create one.
+**Warning: Do not create macros with the same names. Then it will do nothing.**
 
 #### DynamicMacro Syntax
 
@@ -25,11 +30,11 @@ In those examples you will see word **"dynamicMacros"**. It is just for clear pr
 
 Keep in mind those are just 4 examples from basic to advanced macros. 
 
-First line with @dynamicMacros occurences (excluding facts below) will be considered as strings for healer. 
+First line with @dynamicMacros (excluding facts below) will be considered as strings for healer. 
 Second line of @dynamicMacros(excluding facts below) will be considered as line for dps and each occurence of @dynamicMacros will be replaced with damager. 
 
 **Facts:** 
-@target, @focus, mouseover, @partypet1, @partypet2, @arena1, @arena2, @arena3, @player, @yourcharactername wont be touched and will behave as blizzard intended to.
+@target, @focus, mouseover, @partypet1, @partypet2, @arena1, @arena2, @arena3, @player, @cursor, @yourcharactername wont be touched and will behave as blizzard intended to.
 
 Modifiers(nomod,shift..) which I use in examples are totally optional. They work same way they do in default macros by Blizzard.
 
@@ -68,7 +73,7 @@ ___
 ### Useful information
 Macros wont be updating while you have default blizzard macro window GUI opened. So simply once you create macro close this window to make it work. Then you can reopen it once you are in 2 or 3 membered party to see changes.
 
-Keep in mind addon updates your macros 3 seconds after your party group is updated. This means somebody leaves/joins/wentOffline/wentOnline/loadIntoArena and at the same time number of player in group is still 2 or 3.
+Keep in mind addon updates your macros 3 seconds after your party group is updated and you are inside 2v2 or 3v3 arena. This means somebody leaves/joins/wentOffline/wentOnline/loadIntoArena and at the same time number of player in group is still 2 or 3.
 
 This is the logic how it works. This way your macros dynamically assign name of player you would overwrite manually and you never have to do that again.
 
@@ -100,5 +105,8 @@ Ctrl modifier for **friendly players is bugged** since launch of Dragonflight. I
    */cast [known:Blessing of sanctuary, @dynamicMacros] Blessing of sanctuary; [@dynamicMacros] Blessing of spellwarding;*
 
 ---
-
+### ** Valuable Testers**
+##### **Marimvp** *(helped to find root cause of pesky bug when sometimes macros are not updated between solo shuffle rounds)*
+---
 **Credit for idea goes to Black**
+
