@@ -59,6 +59,9 @@ function dynamicMacroUpdate()
         if (D ~= nil) then
             print('|cff33ff99DynamicMacros: |rDamager: ' .. D) 
         end
+    else
+        -- Fix pesky bug when sometimes macros are not updated between solo shuffle rounds when server has delay and still registers you to be in combat
+        C_Timer.After(2, dynamicMacroUpdate)
     end
 end
 
