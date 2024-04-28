@@ -1,4 +1,4 @@
-## Interface: 100107
+## Interface: 100206
 ## Title: DynamicMacros
 ## Author: Krionel
 ## Version: 2.2.0
