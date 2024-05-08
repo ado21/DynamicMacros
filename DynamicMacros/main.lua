@@ -6,8 +6,8 @@ local H -- healer var
 local D -- damager var
 
 -- manual trigger to modify macros in any instance type
-SLASH_DMCOMMANDS1 = "/dmt"
-SlashCmdList["DMCOMMANDS"] = function(msg)
+SLASH_DMCOMMANDSXYZ1 = "/dmt"
+SlashCmdList["DMCOMMANDSXYZ"] = function(msg)
     H = nil
     D = nil
     dynamicMacroUpdate()
