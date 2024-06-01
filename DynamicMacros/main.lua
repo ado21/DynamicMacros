@@ -1,5 +1,5 @@
 local dynamicMacrosFrameName = "dynamicMacrosFrameName";
-macroNameArray = {};
+DynamicMacros_macroNameArray = {};
 local nonExistentmacroNameArray
 
 local H -- healer var
@@ -34,16 +34,16 @@ function dynamicMacroUpdate()
     if not InCombatLockdown() and ((GetNumGroupMembers() == 2) or (GetNumGroupMembers() == 3)) then
         nonExistentmacroNameArray = {}
         -- loop to parse every macro user defined 
-        for key, value in pairs(macroNameArray) do
-            body = GetMacroBody(macroNameArray[key])
+        for key, value in pairs(DynamicMacros_macroNameArray) do
+            body = GetMacroBody(DynamicMacros_macroNameArray[key])
             -- in case specified macro under specific name does not exist, add macro name into list which will be printed as information for user later in code
             if body == nil then
-                table.insert(nonExistentmacroNameArray, macroNameArray[key])
+                table.insert(nonExistentmacroNameArray, DynamicMacros_macroNameArray[key])
             else
-                H,D = specifyHealerAndDamagerInParty(macroNameArray[key]);
+                H,D = specifyHealerAndDamagerInParty(DynamicMacros_macroNameArray[key]);
             end
         end
-        if (not next(macroNameArray)) then
+        if (not next(DynamicMacros_macroNameArray)) then
             --print("DynamicMacros are not created !")
             return
         -- print names of macros which do not exist but are specified in addon
