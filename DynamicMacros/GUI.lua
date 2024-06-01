@@ -45,9 +45,9 @@ function CreateOptions()
             print("|cff33ff99DynamicMacros: |rMacro name is empty!")
             return
         end
-        result = has_value(macroNameArray, userMacroNameInput)
+        result = has_value(DynamicMacros_macroNameArray, userMacroNameInput)
         if (result == false) then
-            table.insert(macroNameArray, userMacroNameInput)
+            table.insert(DynamicMacros_macroNameArray, userMacroNameInput)
             ideditbox:SetText("");
             UpdateUIList()
         else
@@ -60,9 +60,9 @@ function CreateOptions()
     -- add button to UI
     local removebutton = panel:MakeButton('name', 'Remove', 'newsize', 2, 'description', 'Remove Macro name', 'func', function()
         local userMacroNameInput = ideditbox:GetText()
-        local result = has_value(macroNameArray, userMacroNameInput)
+        local result = has_value(DynamicMacros_macroNameArray, userMacroNameInput)
         if (result ~= false) then
-            table.remove(macroNameArray,result)
+            table.remove(DynamicMacros_macroNameArray,result)
             ideditbox:SetText("");
             UpdateUIList()
         end
@@ -95,7 +95,7 @@ function CreateOptions()
     listNames:SetIndentedWordWrap(false)
     listNames:SetFontObject(GameFontNormal)
     listNames:SetJustifyH("LEFT")
-    listNames:AddMessage(table.concat(macroNameArray, ', '))
+    listNames:AddMessage(table.concat(DynamicMacros_macroNameArray, ', '))
 
 
     local info = CreateFrame("Frame", "dynamicMacrosFrame", panel, BackdropTemplateMixin and "BackdropTemplate")
@@ -113,7 +113,7 @@ end
 
 function UpdateUIList()
     listNames:Clear()
-    listNames:AddMessage(table.concat(macroNameArray, ', '))
+    listNames:AddMessage(table.concat(DynamicMacros_macroNameArray, ', '))
 end
 
 function CreateEditBox(name, parent, width, height)
@@ -137,4 +137,3 @@ loader:SetScript('OnEvent', function(self, event, arg1)
         self:UnregisterEvent('ADDON_LOADED');
     end
 end);
-
