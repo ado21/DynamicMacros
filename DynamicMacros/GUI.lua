@@ -1,5 +1,5 @@
 local SO = LibStub("LibATTSimpleOptions")
-local DMVersion = "2.2.1"
+local DMVersion = "2.2.2"
 
 --check if value exists in array
 function has_value (tab, val)
