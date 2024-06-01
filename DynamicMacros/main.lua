@@ -5,6 +5,27 @@ local nonExistentmacroNameArray
 local H -- healer var
 local D -- damager var
 
+--Temporary code to inform users about macro list wipe in version 2.2.2
+
+-- Create a frame to register events
+local wipedDynamicMacroList = CreateFrame("Frame")
+
+-- Define the event handler function
+local function warnUsers(self, event, ...)
+    if event == "PLAYER_ENTERING_WORLD" then
+        print("|cff33ff99DynamicMacros v2.2.2 |r wiped your list of macros. To add macros open settings via |cff33ff99/dm|r.")
+        print("|c99FF6F61Tip:|r You can see your old macro list by downgrading addon back to |cff33ff99v2.2.1|r.")
+    end
+end
+
+-- Register the event with the frame
+wipedDynamicMacroList:RegisterEvent("PLAYER_ENTERING_WORLD")
+
+-- Set the script to run the event handler function when the event fires
+wipedDynamicMacroList:SetScript("OnEvent", warnUsers)
+
+--End of Temporary code
+
 -- manual trigger to modify macros in any instance type
 SLASH_DMCOMMANDSXYZ1 = "/dmt"
 SlashCmdList["DMCOMMANDSXYZ"] = function(msg)
