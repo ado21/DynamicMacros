@@ -1,9 +1,9 @@
 ## Interface: 100207
 ## Title: DynamicMacros
 ## Author: Krionel
-## Version: 2.2.1
+## Version: 2.2.2
 
-## SavedVariablesPerCharacter: macroNameArray
+## SavedVariablesPerCharacter: DynamicMacros_macroNameArray
 
 embeds.xml
 GUI.lua
