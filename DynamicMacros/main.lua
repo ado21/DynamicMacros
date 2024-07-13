@@ -2,6 +2,8 @@ local dynamicMacrosFrameName = "dynamicMacrosFrameName";
 DynamicMacros_macroNameArray = {};
 local nonExistentmacroNameArray
 local dynamicMacros = CreateFrame("Frame", "DynamicMacrosFrame");
+local updateTimer = nil -- Timer variable
+local delaySeconds = 3 -- Delay in seconds after last trigger
 local H -- healer var
 local D -- damager var
 
@@ -23,21 +25,28 @@ end
 
 --Register event on which macros should start changing
 
-dynamicMacros:RegisterEvent("PLAYER_TARGET_CHANGED");--GROUP_ROSTER_UPDATE,PLAYER_TARGET_CHANGED,ARENA_TEAM_UPDATE
+dynamicMacros:RegisterEvent("GROUP_ROSTER_UPDATE");--GROUP_ROSTER_UPDATE,PLAYER_TARGET_CHANGED,ARENA_TEAM_UPDATE
 
 local function updatePlayerNamesInMacros(self, event, ...)
     _,instanceType = IsInInstance()
-    --if (instanceType == "arena") then
+    if (instanceType == "arena") then
         H = nil
         D = nil
 
         if InCombatLockdown() then
             self:RegisterEvent("PLAYER_REGEN_ENABLED")
         else
+            -- Cancel ongoing timer on each trigger
+            if updateTimer then
+                updateTimer:Cancel()
+            end
             --delay whole functionality by x seconds due to UnitName() api returning unknown immediately on player load into arena
-            C_Timer.After(3, dynamicMacroUpdate)
+            updateTimer = C_Timer.NewTimer(delaySeconds, function()
+                dynamicMacroUpdate()
+                updateTimer = nil -- Reset timer to minimize number of function triggers when GROUP_ROSTER_UPDATE fires multiple times in short time
+            end)
         end
-    --end
+    end
 end
 
 dynamicMacros:SetScript("OnEvent", function(self, event, ...)
