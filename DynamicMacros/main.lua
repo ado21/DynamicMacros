@@ -1,58 +1,63 @@
 local dynamicMacrosFrameName = "dynamicMacrosFrameName";
 DynamicMacros_macroNameArray = {};
 local nonExistentmacroNameArray
-
+local dynamicMacros = CreateFrame("Frame", "DynamicMacrosFrame");
 local H -- healer var
 local D -- damager var
-
---Temporary code to inform users about macro list wipe in version 2.2.2
-
--- Create a frame to register events
-local wipedDynamicMacroList = CreateFrame("Frame")
-
--- Define the event handler function
-local function warnUsers(self, event, ...)
-    if event == "PLAYER_ENTERING_WORLD" then
-        print("|cff33ff99DynamicMacros v2.2.2 |r wiped your list of macros. To add macros open settings via |cff33ff99/dm|r.")
-        print("|c99FF6F61Tip:|r You can see your old macro list by downgrading addon back to |cff33ff99v2.2.1|r.")
-    end
-end
-
--- Register the event with the frame
-wipedDynamicMacroList:RegisterEvent("PLAYER_ENTERING_WORLD")
-
--- Set the script to run the event handler function when the event fires
-wipedDynamicMacroList:SetScript("OnEvent", warnUsers)
-
---End of Temporary code
 
 -- manual trigger to modify macros in any instance type
 SLASH_DMCOMMANDSXYZ1 = "/dmt"
 SlashCmdList["DMCOMMANDSXYZ"] = function(msg)
     H = nil
     D = nil
-    dynamicMacroUpdate()
+    
+    if InCombatLockdown() then
+        -- If in combat, register for PLAYER_REGEN_ENABLED event
+        dynamicMacros:RegisterEvent("PLAYER_REGEN_ENABLED")
+    else
+        -- If not in combat, directly trigger macro update
+        dynamicMacroUpdate()
+    end
+
 end 
 
 --Register event on which macros should start changing
-local dynamicMacros = CreateFrame("Frame", "DynamicMacrosFrame");
-dynamicMacros:RegisterEvent("GROUP_ROSTER_UPDATE");--GROUP_ROSTER_UPDATE,PLAYER_TARGET_CHANGED,ARENA_TEAM_UPDATE
+
+dynamicMacros:RegisterEvent("PLAYER_TARGET_CHANGED");--GROUP_ROSTER_UPDATE,PLAYER_TARGET_CHANGED,ARENA_TEAM_UPDATE
 
 local function updatePlayerNamesInMacros(self, event, ...)
     _,instanceType = IsInInstance()
-    if (instanceType == "arena") then
+    --if (instanceType == "arena") then
         H = nil
         D = nil
-        --delay whole functionality by x seconds due to UnitName() api returning unknown immediately on player load into arena
-        C_Timer.After(3, dynamicMacroUpdate)
-    end
+
+        if InCombatLockdown() then
+            self:RegisterEvent("PLAYER_REGEN_ENABLED")
+        else
+            --delay whole functionality by x seconds due to UnitName() api returning unknown immediately on player load into arena
+            C_Timer.After(3, dynamicMacroUpdate)
+        end
+    --end
 end
 
-dynamicMacros:SetScript("OnEvent", updatePlayerNamesInMacros);
+dynamicMacros:SetScript("OnEvent", function(self, event, ...)
+    if event == "PLAYER_REGEN_ENABLED" then
+        self:UnregisterEvent("PLAYER_REGEN_ENABLED")
+        dynamicMacroUpdate()
+    else
+        updatePlayerNamesInMacros(self, event, ...)
+    end
+end)
 
 function dynamicMacroUpdate()
+
+    if InCombatLockdown() then
+        dynamicMacros:RegisterEvent("PLAYER_REGEN_ENABLED")
+        return
+    end
+
     --trigger only if 2 or 3 players are in party (2v2 / 3v3 situations)
-    if not InCombatLockdown() and ((GetNumGroupMembers() == 2) or (GetNumGroupMembers() == 3)) then
+    if ((GetNumGroupMembers() == 2) or (GetNumGroupMembers() == 3)) then
         nonExistentmacroNameArray = {}
         -- loop to parse every macro user defined 
         for key, value in pairs(DynamicMacros_macroNameArray) do
@@ -80,9 +85,6 @@ function dynamicMacroUpdate()
         if (D ~= nil) then
             print('|cff33ff99DynamicMacros: |rDamager: ' .. D) 
         end
-    else
-        -- Fix pesky bug when sometimes macros are not updated between solo shuffle rounds when server has delay and still registers you to be in combat
-        C_Timer.After(2, dynamicMacroUpdate)
     end
 end
 
