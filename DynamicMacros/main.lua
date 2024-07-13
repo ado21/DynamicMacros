@@ -20,11 +20,9 @@ SlashCmdList["DMCOMMANDSXYZ"] = function(msg)
         -- If not in combat, directly trigger macro update
         dynamicMacroUpdate()
     end
-
 end 
 
 --Register event on which macros should start changing
-
 dynamicMacros:RegisterEvent("GROUP_ROSTER_UPDATE");--GROUP_ROSTER_UPDATE,PLAYER_TARGET_CHANGED,ARENA_TEAM_UPDATE
 
 local function updatePlayerNamesInMacros(self, event, ...)
