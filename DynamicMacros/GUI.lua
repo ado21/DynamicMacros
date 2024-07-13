@@ -1,5 +1,4 @@
-local SO = LibStub("LibATTSimpleOptions")
-local DMVersion = "2.3.0"
+local DMVersion = GetAddOnMetadata("DynamicMacros", "Version")
 
 --check if value exists in array
 function has_value (tab, val)
@@ -14,22 +13,32 @@ end
 
 -- create UI ingame
 function CreateOptions()
-    local panel = SO.AddOptionsPanel("DynamicMacros", function() end)
-    SO.AddSlashCommand("DynamicMacros", "/dm")
+    local panel = CreateFrame("Frame")
+    panel.name = "DynamicMacros"            
+    InterfaceOptions_AddCategory(panel)
 
-    local title, subText = panel:MakeTitleTextAndSubText("Dynamic Macros")
+    -- create GUI commands
+    SLASH_DMCOMMANDSGUI1 = "/dm"
+    SlashCmdList["DMCOMMANDSGUI"] = function(msg)
+        InterfaceOptionsFrame_OpenToCategory(panel)
+    end
+
+    -- add widgets to the panel as desired
+    local title = panel:CreateFontString("ARTWORK", nil, "GameFontNormalLarge")
+    title:SetPoint("TOPLEFT", 15, -15)
+    title:SetText("Dynamic Macros")
 
     local dynamicMacrosDescription = CreateFrame("Frame", "dynamicMacrosFrame", panel, BackdropTemplateMixin and "BackdropTemplate")
     dynamicMacrosDescription:SetPoint("TOPLEFT", panel, "TOPLEFT", 15, -60)
     dynamicMacrosDescription:SetSize(50, 50)
 
     local dynamicMacrosDescriptionText = dynamicMacrosDescription:CreateFontString(nil, "ARTWORK", "GameFontDisable")
-    dynamicMacrosDescriptionText:SetText("To make this feature blizzard macro logic has undergone some improvements. Therefore to")
+    dynamicMacrosDescriptionText:SetText("To make this feature, blizzard's macro logic has undergone some improvements. Therefore to")
     dynamicMacrosDescriptionText:SetTextColor(1,0,0,1)
     dynamicMacrosDescriptionText:SetPoint("TOPLEFT", dynamicMacrosDescription, "TOPLEFT", 0, 0)
     dynamicMacrosDescriptionText:SetFontObject(GameFontNormal)
     local dynamicMacrosDescriptionText2 = dynamicMacrosDescription:CreateFontString(nil, "ARTWORK", "GameFontDisable")
-    dynamicMacrosDescriptionText2:SetText("understand logic of dynamic macros please see documentation.")
+    dynamicMacrosDescriptionText2:SetText("understand logic of dynamic macros please see documentation at GitHub.")
     dynamicMacrosDescriptionText2:SetTextColor(1,0,0,1)
     dynamicMacrosDescriptionText2:SetPoint("TOPLEFT", dynamicMacrosDescription, "TOPLEFT", 0, -20)
     dynamicMacrosDescriptionText2:SetFontObject(GameFontNormal)
@@ -39,7 +48,12 @@ function CreateOptions()
     ideditbox:SetPoint("TOPLEFT", panel, "TOPLEFT", 25, -150)
 
     -- add button to UI
-    local addbutton = panel:MakeButton('name', 'Add','newsize', 2, 'description', "Add Macro name", 'func', function()
+    local addbutton = CreateFrame("Button", nil, panel, "UIPanelButtonTemplate")
+    addbutton:SetSize(65, 30)
+    addbutton:SetText("Add")
+    addbutton:SetPoint("TOPLEFT", ideditbox, "BOTTOMLEFT", -5, -5)
+    addbutton:SetScript("OnClick", function(self, button, down)
+        
         local userMacroNameInput = ideditbox:GetText()
         if userMacroNameInput == "" then
             print("|cff33ff99DynamicMacros: |rMacro name is empty!")
@@ -53,30 +67,32 @@ function CreateOptions()
         else
             print("|cff33ff99DynamicMacros: |rMacro with this name already exists!")
         end
-           
+
     end)
-    addbutton:SetPoint("TOPLEFT", ideditbox, "BOTTOMLEFT", -5, -5)
 
     -- add button to UI
-    local removebutton = panel:MakeButton('name', 'Remove', 'newsize', 2, 'description', 'Remove Macro name', 'func', function()
+    local removebutton = CreateFrame("Button", nil, panel, "UIPanelButtonTemplate")
+    removebutton:SetSize(65, 30)
+    removebutton:SetText("Remove")
+    removebutton:SetPoint("LEFT", addbutton, "RIGHT", 15, 0)
+    removebutton:SetScript("OnClick", function(self, button, down)
+
         local userMacroNameInput = ideditbox:GetText()
         local result = has_value(DynamicMacros_macroNameArray, userMacroNameInput)
         if (result ~= false) then
             table.remove(DynamicMacros_macroNameArray,result)
             ideditbox:SetText("");
             UpdateUIList()
-        end
-
-    end)    
-
-    removebutton:SetPoint("LEFT", addbutton, "RIGHT", 15, 0)
+        end 
+        
+    end) 
     
     local macroNameTitle = CreateFrame("Frame", "dynamicMacrosFrame", panel, BackdropTemplateMixin and "BackdropTemplate")
     macroNameTitle:SetPoint("TOPLEFT", panel, "TOPLEFT", 15, -235)
     macroNameTitle:SetSize(50, 50)
 
     local macroNameTitleText = macroNameTitle:CreateFontString(nil, "ARTWORK", "GameFontDisable")
-    macroNameTitleText:SetText("List of saved macros which will behave as Dynamic Macros")
+    macroNameTitleText:SetText("List of macros which will function as Dynamic Macros")
     macroNameTitleText:SetPoint("TOPLEFT", macroNameTitle, "TOPLEFT", 0, 0)
     macroNameTitleText:SetFontObject(GameFontNormalLarge)
 
@@ -117,7 +133,7 @@ function UpdateUIList()
 end
 
 function CreateEditBox(name, parent, width, height)
-    local editbox = CreateFrame("EditBox", parent:GetName() .. name, parent, "InputBoxTemplate")
+    local editbox = CreateFrame("EditBox", parent:GetName(), parent, "InputBoxTemplate")
     editbox:SetHeight(height)
     editbox:SetWidth(width)
     editbox:SetAutoFocus(false)
