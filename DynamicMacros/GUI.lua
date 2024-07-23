@@ -1,7 +1,7 @@
 local DMVersion = GetAddOnMetadata("DynamicMacros", "Version")
 
 --check if value exists in array
-function has_value (tab, val)
+local function has_value (tab, val)
     for index, value in ipairs(tab) do
         if value == val then
             return index
@@ -11,8 +11,27 @@ function has_value (tab, val)
     return false
 end
 
+local function CreateEditBox(name, parent, width, height)
+    local editbox = CreateFrame("EditBox", parent:GetName(), parent, "InputBoxTemplate")
+    editbox:SetHeight(height)
+    editbox:SetWidth(width)
+    editbox:SetAutoFocus(false)
+    editbox:SetMaxLetters(16)
+    local label = editbox:CreateFontString(nil, "BACKGROUND", "GameFontNormal")
+    label:SetText(name)
+    label:SetPoint("BOTTOMLEFT", editbox, "TOPLEFT", -3, 0)
+    return editbox
+end
+
+local function UpdateUIList(listNames)
+    listNames:Clear()
+    listNames:AddMessage(table.concat(DynamicMacros_macroNameArray, ', '))
+    return listNames
+end
+
 -- create UI ingame
-function CreateOptions()
+local function CreateOptions()
+    local listNames
     local panel = CreateFrame("Frame")
     panel.name = "DynamicMacros"            
     InterfaceOptions_AddCategory(panel)
@@ -63,7 +82,7 @@ function CreateOptions()
         if (result == false) then
             table.insert(DynamicMacros_macroNameArray, userMacroNameInput)
             ideditbox:SetText("");
-            UpdateUIList()
+            listNames = UpdateUIList(listNames)
         else
             print("|cff33ff99DynamicMacros: |rMacro with this name already exists!")
         end
@@ -82,7 +101,7 @@ function CreateOptions()
         if (result ~= false) then
             table.remove(DynamicMacros_macroNameArray,result)
             ideditbox:SetText("");
-            UpdateUIList()
+            listNames = UpdateUIList(listNames)
         end 
         
     end) 
@@ -125,23 +144,6 @@ function CreateOptions()
     local contact = info:CreateFontString(nil, "ARTWORK", "GameFontDisable")
     contact:SetText("[ Contact: https://www.curseforge.com/wow/addons/dynamicmacros-pvp ]")
     contact:SetPoint("TOPLEFT", info, "TOPLEFT", 0, -15)
-end
-
-function UpdateUIList()
-    listNames:Clear()
-    listNames:AddMessage(table.concat(DynamicMacros_macroNameArray, ', '))
-end
-
-function CreateEditBox(name, parent, width, height)
-    local editbox = CreateFrame("EditBox", parent:GetName(), parent, "InputBoxTemplate")
-    editbox:SetHeight(height)
-    editbox:SetWidth(width)
-    editbox:SetAutoFocus(false)
-    editbox:SetMaxLetters(16)
-    local label = editbox:CreateFontString(nil, "BACKGROUND", "GameFontNormal")
-    label:SetText(name)
-    label:SetPoint("BOTTOMLEFT", editbox, "TOPLEFT", -3, 0)
-    return editbox
 end
 
 -- basicaly main funcion
