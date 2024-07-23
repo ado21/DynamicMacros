@@ -272,7 +272,7 @@ local function updatePlayerNamesInMacros(self, event, ...)
 end
 
 --Register event on which macros should start changing
-dynamicMacros:RegisterEvent("PLAYER_TARGET_CHANGED");--GROUP_ROSTER_UPDATE,PLAYER_TARGET_CHANGED,ARENA_TEAM_UPDATE
+dynamicMacros:RegisterEvent("GROUP_ROSTER_UPDATE");--GROUP_ROSTER_UPDATE,PLAYER_TARGET_CHANGED,ARENA_TEAM_UPDATE
 
 dynamicMacros:SetScript("OnEvent", function(self, event, ...)
     if event == "PLAYER_REGEN_ENABLED" then
