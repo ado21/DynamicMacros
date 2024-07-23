@@ -7,95 +7,46 @@ local delaySeconds = 3 -- Delay in seconds after last trigger
 local H -- healer var
 local D -- damager var
 
--- manual trigger to modify macros in any instance type
-SLASH_DMCOMMANDSXYZ1 = "/dmt"
-SlashCmdList["DMCOMMANDSXYZ"] = function(msg)
-    H = nil
-    D = nil
-    
-    if InCombatLockdown() then
-        -- If in combat, register for PLAYER_REGEN_ENABLED event
-        dynamicMacros:RegisterEvent("PLAYER_REGEN_ENABLED")
-    else
-        -- If not in combat, directly trigger macro update
-        dynamicMacroUpdate()
+--Check if name is playerName if yes repeat search and return position indicators
+local function checkIfPlayerUnitName(body,j,k)
+    local name,_ = UnitNameUnmodified("player")
+    if (name == strsub(body, j+1, k-1)) then
+        return true
     end
-end 
-
---Register event on which macros should start changing
-dynamicMacros:RegisterEvent("GROUP_ROSTER_UPDATE");--GROUP_ROSTER_UPDATE,PLAYER_TARGET_CHANGED,ARENA_TEAM_UPDATE
-
-local function updatePlayerNamesInMacros(self, event, ...)
-    _,instanceType = IsInInstance()
-    if (instanceType == "arena") then
-        H = nil
-        D = nil
-
-        if InCombatLockdown() then
-            self:RegisterEvent("PLAYER_REGEN_ENABLED")
-        else
-            -- Cancel ongoing timer on each trigger
-            if updateTimer then
-                updateTimer:Cancel()
-            end
-            --delay whole functionality by x seconds due to UnitName() api returning unknown immediately on player load into arena
-            updateTimer = C_Timer.NewTimer(delaySeconds, function()
-                dynamicMacroUpdate()
-                updateTimer = nil -- Reset timer to minimize number of function triggers when GROUP_ROSTER_UPDATE fires multiple times in short time
-            end)
-        end
-    end
+    return false
 end
 
-dynamicMacros:SetScript("OnEvent", function(self, event, ...)
-    if event == "PLAYER_REGEN_ENABLED" then
-        self:UnregisterEvent("PLAYER_REGEN_ENABLED")
-        dynamicMacroUpdate()
-    else
-        updatePlayerNamesInMacros(self, event, ...)
-    end
-end)
-
-function dynamicMacroUpdate()
-
-    if InCombatLockdown() then
-        dynamicMacros:RegisterEvent("PLAYER_REGEN_ENABLED")
-        return
-    end
-
-    --trigger only if 2 or 3 players are in party (2v2 / 3v3 situations)
-    if ((GetNumGroupMembers() == 2) or (GetNumGroupMembers() == 3)) then
-        nonExistentmacroNameArray = {}
-        -- loop to parse every macro user defined 
-        for key, value in pairs(DynamicMacros_macroNameArray) do
-            body = GetMacroBody(DynamicMacros_macroNameArray[key])
-            -- in case specified macro under specific name does not exist, add macro name into list which will be printed as information for user later in code
-            if body == nil then
-                table.insert(nonExistentmacroNameArray, DynamicMacros_macroNameArray[key])
-            else
-                H,D = specifyHealerAndDamagerInParty(DynamicMacros_macroNameArray[key]);
-            end
-        end
-        if (not next(DynamicMacros_macroNameArray)) then
-            --print("DynamicMacros are not created !")
+local function findNameInMacro(body,i,j,k,l)
+    if l ~= nil then
+        if l > strlen(body) then
             return
-        -- print names of macros which do not exist but are specified in addon
-        elseif (#nonExistentmacroNameArray ~= 0) then
-            print("|cff33ff99DynamicMacros: |rOne or more of the specified macros are non existent. For that reason those macros:\n[ "..table.concat(nonExistentmacroNameArray, ', ').." ] has been omitted.")               
-        else
-            --print("All DynamicMacros has been adjusted")
-        end
-        -- Inform user who has been determined as healer and damager
-        if (H ~= nil) then
-            print('|cff33ff99DynamicMacros: |rHealer: ' .. H) 
-        end
-        if (D ~= nil) then
-            print('|cff33ff99DynamicMacros: |rDamager: ' .. D) 
         end
     end
+    --start of unit name at @
+    i, j = string.find(body, "@", l)
+
+    --look for name ending with "]"
+    k, l = string.find(body, "%]", j)
+
+    --look for name ending with ","
+    local m, n = string.find(body, ",", j)
+
+    -- in case "," has been found earlier than "]" consider it as end of name
+    if (m ~= nil and n ~= nil) then
+        if (n < l) then
+            k = m
+            l = n
+        end 
+    end
+
+    --in case macro body is empty
+    if (i == nil and j == nil and k == nil and l == nil) then
+       return i,j,k,l 
+    end
+    return i,j,k,l+1
 end
 
-function specifyHealerAndDamagerInParty(macroName)
+local function specifyHealerAndDamagerInParty(macroName)
     local body=GetMacroBody(macroName) 
     local i,j,k,l
     local m = 0
@@ -145,7 +96,7 @@ function specifyHealerAndDamagerInParty(macroName)
                 end
                 --look for "/" character which triggers second while loop in case whole first line with healer names is correctly replaced
                 --if "/" char is not found (p == nil) do nothing
-                p,_ = string.find(body, "%/", l)
+                local p,_ = string.find(body, "%/", l)
                 if (l == nil or f == nil) then
                     break
                 end
@@ -244,41 +195,90 @@ function specifyHealerAndDamagerInParty(macroName)
     return H,D
 end
 
-function findNameInMacro(body,i,j,k,l)
-    if l ~= nil then
-        if l > strlen(body) then
+local function dynamicMacroUpdate()
+
+    if InCombatLockdown() then
+        dynamicMacros:RegisterEvent("PLAYER_REGEN_ENABLED")
+        return
+    end
+
+    --trigger only if 2 or 3 players are in party (2v2 / 3v3 situations)
+    if ((GetNumGroupMembers() == 2) or (GetNumGroupMembers() == 3)) then
+        nonExistentmacroNameArray = {}
+        -- loop to parse every macro user defined 
+        for key, value in pairs(DynamicMacros_macroNameArray) do
+            body = GetMacroBody(DynamicMacros_macroNameArray[key])
+            -- in case specified macro under specific name does not exist, add macro name into list which will be printed as information for user later in code
+            if body == nil then
+                table.insert(nonExistentmacroNameArray, DynamicMacros_macroNameArray[key])
+            else
+                H,D = specifyHealerAndDamagerInParty(DynamicMacros_macroNameArray[key]);
+            end
+        end
+        if (not next(DynamicMacros_macroNameArray)) then
+            --print("DynamicMacros are not created !")
             return
+        -- print names of macros which do not exist but are specified in addon
+        elseif (#nonExistentmacroNameArray ~= 0) then
+            print("|cff33ff99DynamicMacros: |rOne or more of the specified macros are non existent. For that reason those macros:\n[ "..table.concat(nonExistentmacroNameArray, ', ').." ] has been omitted.")               
+        else
+            --print("All DynamicMacros has been adjusted")
+        end
+        -- Inform user who has been determined as healer and damager
+        if (H ~= nil) then
+            print('|cff33ff99DynamicMacros: |rHealer: ' .. H) 
+        end
+        if (D ~= nil) then
+            print('|cff33ff99DynamicMacros: |rDamager: ' .. D) 
         end
     end
-    --start of unit name at @
-    i, j = string.find(body, "@", l)
-
-    --look for name ending with "]"
-    k, l = string.find(body, "%]", j)
-
-    --look for name ending with ","
-    local m, n = string.find(body, ",", j)
-
-    -- in case "," has been found earlier than "]" consider it as end of name
-    if (m ~= nil and n ~= nil) then
-        if (n < l) then
-            k = m
-            l = n
-        end 
-    end
-
-    --in case macro body is empty
-    if (i == nil and j == nil and k == nil and l == nil) then
-       return i,j,k,l 
-    end
-    return i,j,k,l+1
 end
 
---Check if name is playerName if yes repeat search and return position indicators
-function checkIfPlayerUnitName(body,j,k)
-    local name,_ = UnitNameUnmodified("player")
-    if (name == strsub(body, j+1, k-1)) then
-        return true
+-- manual trigger to modify macros in any instance type
+SLASH_DMCOMMANDSXYZ1 = "/dmt"
+SlashCmdList["DMCOMMANDSXYZ"] = function(msg)
+    H = nil
+    D = nil
+    
+    if InCombatLockdown() then
+        -- If in combat, register for PLAYER_REGEN_ENABLED event
+        dynamicMacros:RegisterEvent("PLAYER_REGEN_ENABLED")
+    else
+        -- If not in combat, directly trigger macro update
+        dynamicMacroUpdate()
     end
-    return false
+end 
+
+local function updatePlayerNamesInMacros(self, event, ...)
+    local _,instanceType = IsInInstance()
+    if (instanceType == "arena") then
+        H = nil
+        D = nil
+
+        if InCombatLockdown() then
+            self:RegisterEvent("PLAYER_REGEN_ENABLED")
+        else
+            -- Cancel ongoing timer on each trigger
+            if updateTimer then
+                updateTimer:Cancel()
+            end
+            --delay whole functionality by x seconds due to UnitName() api returning unknown immediately on player load into arena
+            updateTimer = C_Timer.NewTimer(delaySeconds, function()
+                dynamicMacroUpdate()
+                updateTimer = nil -- Reset timer to minimize number of function triggers when GROUP_ROSTER_UPDATE fires multiple times in short time
+            end)
+        end
+    end
 end
+
+--Register event on which macros should start changing
+dynamicMacros:RegisterEvent("PLAYER_TARGET_CHANGED");--GROUP_ROSTER_UPDATE,PLAYER_TARGET_CHANGED,ARENA_TEAM_UPDATE
+
+dynamicMacros:SetScript("OnEvent", function(self, event, ...)
+    if event == "PLAYER_REGEN_ENABLED" then
+        self:UnregisterEvent("PLAYER_REGEN_ENABLED")
+        dynamicMacroUpdate()
+    else
+        updatePlayerNamesInMacros(self, event, ...)
+    end
+end)
