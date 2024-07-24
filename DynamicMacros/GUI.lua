@@ -33,13 +33,14 @@ end
 local function CreateOptions()
     local listNames
     local panel = CreateFrame("Frame")
-    panel.name = "DynamicMacros"            
-    InterfaceOptions_AddCategory(panel)
+    panel.name = "DynamicMacros"  
+    local category = Settings.RegisterCanvasLayoutCategory(panel, panel.name)         
+    Settings.RegisterAddOnCategory(category);
 
     -- create GUI commands
     SLASH_DMCOMMANDSGUI1 = "/dm"
     SlashCmdList["DMCOMMANDSGUI"] = function(msg)
-        InterfaceOptionsFrame_OpenToCategory(panel)
+        Settings.OpenToCategory(category:GetID())
     end
 
     -- add widgets to the panel as desired
