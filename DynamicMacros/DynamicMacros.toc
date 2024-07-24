@@ -1,7 +1,7 @@
-## Interface: 100207
+## Interface: 110000
 ## Title: DynamicMacros
 ## Author: Krionel
-## Version: 2.3.2
+## Version: 2.3.3
 
 ## SavedVariablesPerCharacter: DynamicMacros_macroNameArray
 
