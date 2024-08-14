@@ -1,4 +1,4 @@
-local DMVersion = GetAddOnMetadata("DynamicMacros", "Version")
+local DMVersion = C_AddOns.GetAddOnMetadata("DynamicMacros", "Version")
 
 --check if value exists in array
 local function has_value (tab, val)
