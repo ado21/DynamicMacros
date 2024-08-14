@@ -1,4 +1,4 @@
-## Interface: 110000
+## Interface: 110002
 ## Title: DynamicMacros
 ## Author: Krionel
 ## Version: 2.3.4
